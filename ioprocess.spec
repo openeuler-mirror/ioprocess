@@ -1,6 +1,6 @@
 Name:		ioprocess
 Version:	1.4.2
-Release:	1
+Release:	2
 Summary:	Slave process to perform risky IO
 
 Group:		System Environment/Base
@@ -32,6 +32,10 @@ Slave process to perform risky IO.
 
 
 %build
+%if "%toolchain" == "clang"
+	export CFLAGS="$CFLAGS -Wno-error=strict-prototypes"
+	export CXXFLAGS="$CXXFLAGS -Wno-error=strict-prototypes"
+%endif
 %configure
 make %{?_smp_mflags}
 
@@ -65,6 +69,9 @@ Python bindings for ioprocess
 
 
 %changelog
+* Tue Jun 20 2023 yoo <sunyuechi@iscas.ac.cn> - 1.4.2-2
+- fix clang build error
+
 * Tue Jul 06 2021 wangdi <wangdi@kylinos.cn> - 1.4.2-1
 - Bump version to 1.4.2
 
